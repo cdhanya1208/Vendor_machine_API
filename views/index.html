@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<head><title>Vendor Machine</title></head>
+<body>
+    <h1> Vendor Machine </h1> <form><button type="submit" formaction="/" >HOME</button></form>
+    <hr>
+    <h3>Instructions to be followed:</h3>
+    <ul>
+    <li>Choose the Drink you want.</li>
+    <li>Select the amount to be paid.</li>
+    <li>Click on "Procced to pay" button.</li>
+    <li>Check your order status by clicking on "Check your Bill" button.</li>
+    <li>You have an option to cancel your order.</li>
+    <li><b>Note: </b><ul><li>You can <b>reset</b> your payment before clicking on "Proceed to payment"</li>
+          <li>Clicking on "Check your Bill" button only will confirm your payment.</li></ul>
+    </li>
+    </ul>
+    <hr>
+   <form action="/additem" method="POST">
+    <label for="drinks">Choose a drink:</label>
+    <select name="drinks" id="drinks">
+      <option value="Coke" selected>Coke - 25</option>
+      <option value="Pepsi">Pepsi - 32</option>
+      <option value="Soda">Soda -  47</option>
+    </select><br><br>
+    Penny - 1:
+    <input type = "number" id="show_p" name="show_p" min=1></input>
+    Nickel - 5:
+    <input type = "number" id="show_n" name="show_n" min=1></input>
+    Dime - 10:
+    <input type = "number" id="show_d" name="show_d" min=1></input>
+    Quater - 25:
+    <input type = "number" id="show_q" name="show_q" min=1></input>
+     <br><br>
+    <button type="submit" onclick="myfuction()">Proceed to Payment!</button>
+</form>
+<br>
+<button type="button" onclick="reset()">Reset</button>
+<button type="button" onclick="check_Bill('{{final_value}}','{{drink}}','{{amount}}')">Check Your Bill</button>
+</body>
+<script>
+function reset(){
+ document.getElementById("show_p").value=0;
+ document.getElementById("show_n").value=0;
+ document.getElementById("show_d").value=0;
+ document.getElementById("show_q").value=0;
+}
+function check_Bill(final_value,drink,amount){
+console.log(final_value);
+   if(final_value==0){
+   var ans = confirm("Confirm your order");
+   if(ans)
+   alert("Your order is taken successfully!\nYour order:\nDrink: "+drink+"\nCost: "+amount);
+   else{
+       alert("Your order is cancelled!\nRefunded amount "+amount);
+   }
+   }
+   else if(final_value>0){
+       var ans = confirm("You paid in excess!!\nThe excess amount will be refunded!");
+       if(ans)
+       alert("Your order is taken successfully!\nYour order:\nDrink: "+drink+"\nCost: "+amount+"\nRefunded amount: "+final_value);
+       else{
+        alert("Your order is cancelled!\nRefunded amount "+amount); 
+       }
+   }
+   else{
+      var amt = -final_value;
+      alert("You need to pay "+amt+" more to get your drink!");
+   }
+}
+function myfuction(){
+    alert("Click on 'Check your Bill' button to check the status of your order!!");
+}
+</script>
+</html>
